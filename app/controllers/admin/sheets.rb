@@ -60,7 +60,12 @@ module Admin
       if @sheet.save
         display @sheet
       else
-        display({ :success => false, :message => "Validation Error" }, :status => 200)
+        errors = {}
+        @sheet.errors.keys.each do |i|
+          errors[i] = @sheet.errors.on(i)
+        end
+
+        display({ :success => false, :message => "Validation Error", :errors => errors }, :status => 200)
       end
     rescue NameError, JSON::ParseError
       display({ :success => false, :message => "Error in the data" }, :status => 406)
@@ -74,7 +79,12 @@ module Admin
       if @sheet.save
         display @sheet
       else
-        display({ :success => false, :message => "Validation Error" }, :status => 200)
+        errors = {}
+        @sheet.errors.keys.each do |i|
+          errors[i] = @sheet.errors.on(i)
+        end
+
+        display({ :success => false, :message => "Validation Error", :errors => errors }, :status => 200)
       end
     rescue DataMapper::ObjectNotFoundError
       ### DOC: return status 404 if the record don't exist
