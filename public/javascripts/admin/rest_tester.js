@@ -67,7 +67,7 @@ Ext.onReady(function(){
 		 });
       break;
     case "create":
-      model.create(function success(response) {
+      model.create(params,function success(response) {
 		   cp.body.dom.innerHTML = String(response.responseText);
 		 },
 		 function failure(response) {
@@ -171,8 +171,8 @@ Ext.onReady(function(){
 		  disable_all(['rest-params','rest-body']);
 		  break;
 		case "create":
-		  enable_all(['rest-base-url']);
-		  disable_all(['rest-id','rest-params','rest-body']);
+		  enable_all(['rest-base-url','rest-params']);
+		  disable_all(['rest-id','rest-body']);
 		  break;
 		case "save":
 		  enable_all(['rest-base-url','rest-body']);

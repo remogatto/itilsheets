@@ -24,12 +24,12 @@ var RESTcrud = function(base_url) {
 		     });
   };
 
-  this.create = function(success_callback, failure_callback) {
+  this.create = function(params, success_callback, failure_callback) {
     Ext.Ajax.request({
 		       method: 'GET',
 		       headers: { "Content-Type": "text/json" },
 		       url: base_url+'/new'+this._format,
-		       params: {},
+		       params: params,
 		       success: success_callback,
 		       failure: failure_callback
 		     });

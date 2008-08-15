@@ -45,6 +45,9 @@ module Admin
     end
 
     def create
+
+      params.merge!(Merb::Request.query_parse(request.raw_post))
+
       case params[:type]
       when "incident":
           @sheet = IncidentSheet.new
