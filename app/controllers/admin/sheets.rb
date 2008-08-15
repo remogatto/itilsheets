@@ -12,7 +12,12 @@ module Admin
       @sheet = Sheet.get!(params[:id])
       display @sheet
     rescue DataMapper::ObjectNotFoundError
-      raise Merb::ControllerExceptions::NotFound
+      case content_type
+      when :json
+        display({ :success => false, :messages => "Not found" }, :status => 404)
+      else
+#        raise Merb::Controller:NotFoundError
+      end
     end
 
     def new

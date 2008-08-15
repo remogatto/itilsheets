@@ -23,9 +23,12 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do |r|
   # RESTful routes
   # r.resources :posts
+
   r.namespace :admin do |a|
     a.resources :sheets
   end
+
+  r.match('/admin/:action').to(:controller => 'admin/dashboard')
 
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
