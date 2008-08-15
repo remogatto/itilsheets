@@ -1,7 +1,7 @@
 module Admin
 
   class Sheets < Application
-    provides :xml, :json, :yaml
+    provides :json
 
     def index
       @sheets = Sheet.all
@@ -12,12 +12,7 @@ module Admin
       @sheet = Sheet.get!(params[:id])
       display @sheet
     rescue DataMapper::ObjectNotFoundError
-      case content_type
-      when :json
-        display({ :success => false, :messages => "Not found" }, :status => 404)
-      else
-#        raise Merb::Controller:NotFoundError
-      end
+      display({ :success => false, :messages => "Not found" }, :status => 404)
     end
 
     def new
@@ -35,13 +30,7 @@ module Admin
       end
 
       
-      case content_type
-      when :json
-        #create by rest json
-        display @sheet
-      else
-        #create by form
-      end
+      display @sheet
     end
 
     def create
@@ -62,38 +51,21 @@ module Admin
       end
 
       
-      case content_type
-      when :json
-        #create by rest json
-        @sheet.from_json(params[:data])
-        display @sheet
-      else
-        #create by form
-      end
+      #create by rest json
+      @sheet.from_json(params[:data])
+      display @sheet
     end
 
     def update
       @sheet = Sheet.get!(params[:id])
 
-      case content_type
-      when :json
-        #create by rest json
-        puts JSON
-      else
-        #update by form
-      end
+      puts JSON
     end
 
     def destroy
       @sheet = Sheet.get!(params[:id])
 
-      case content_type
-      when :json
-        #create by rest json
-        puts JSON
-      else
-        #update by form
-      end
+      puts JSON
     end
   end
 end
