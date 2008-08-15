@@ -25,7 +25,9 @@ Merb::Router.prepare do |r|
   # r.resources :posts
 
   r.namespace :admin do |a|
-    a.resources :sheets
+    a.match('/sheets/new.json').to(:controller => 'sheets', :format => "json", :action => 'new')
+
+    a.resources :sheets 
   end
 
   r.match('/admin/:action').to(:controller => 'admin/dashboard')

@@ -21,6 +21,27 @@ module Admin
     end
 
     def new
+      case params[:type]
+      when "incident":
+          @sheet = IncidentSheet.new
+      when "problem":
+          @sheet = ProblemSheet.new
+      when "change":
+          @sheet = ChangeSheet.new
+      when "task":
+          @sheet = TaskSheet.new
+      else #techsupport
+        @sheet = TechnicalSupportRequest.new
+      end
+
+      
+      case content_type
+      when :json
+        #create by rest json
+        display @sheet
+      else
+        #create by form
+      end
     end
 
     def create
