@@ -1,4 +1,5 @@
 module Admin
+
   class Sheets < Application
     provides :xml, :json, :yaml
 

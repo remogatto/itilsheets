@@ -2,12 +2,18 @@ class Exceptions < Application
   
   # handle NotFound exceptions (404)
   def not_found
-    render :format => :html
+    "NOTFOUND"
+#    render :format => :html
+  end
+
+  def bad_request
+    "BADREQUEST"
   end
 
   # handle NotAcceptable exceptions (406)
   def not_acceptable
-    render :format => :html
+    "NOTACCEPTABLE"
+#    render :format => :html
   end
 
 end
