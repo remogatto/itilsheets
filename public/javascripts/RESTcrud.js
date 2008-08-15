@@ -51,7 +51,7 @@ var RESTcrud = function(base_url) {
 		       method: 'PUT',
 		       headers: { "Content-Type": "text/json" },
 		       url: base_url+'/'+id+this._format,
-		       params: Ext.util.JSON.encode(data),
+		       params: {data: Ext.util.JSON.encode(data)},
 		       success: success_callback,
 		       failure: failure_callback
 		     });
