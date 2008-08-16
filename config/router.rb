@@ -25,18 +25,18 @@ Merb::Router.prepare do |r|
   # r.resources :posts
 
   r.namespace :admin do |a|
-    a.match('/sheets/new.json').to(:controller => 'sheets', :format => "json", :action => 'new')
-
-    a.resources :sheets 
   end
 
-  r.match('/admin/:action').to(:controller => 'admin/dashboard')
+  r.match('/rest').to(:controller => 'dashboard', :action => 'rest_tester')
+  r.match('/sheets/new.json').to(:controller => 'sheets', :format => "json", :action => 'new')
+  r.resources :sheets 
+  r.match('/').to(:controller => 'dashboard', :action => 'index')
 
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent
   # clients from calling your create or destroy actions with a GET
-  r.default_routes
+  #r.default_routes
   
   # Change this for your home page to be available at /
   # r.match('/').to(:controller => 'whatever', :action =>'index')
