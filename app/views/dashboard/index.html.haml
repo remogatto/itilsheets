@@ -1,0 +1,12 @@
+!!! XML
+!!!
+%html
+  %head
+    %title ALCA ITILSheets Dashboard 0.2
+    - DASHBOARD_SCRIPTS.each do |i|
+      %script{:type => 'text/javascript', :src => i}
+    - DASHBOARD_STYLES.each do |i|
+      %link{:rel => 'stylesheet', :type => 'text/css', :href => i}
+  %body
+
+
