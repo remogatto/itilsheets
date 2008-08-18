@@ -15,6 +15,7 @@ class Sheet
   property :requester,	String, :nullable => false
   property :assigned,	String
   property :created_on, DateTime
+  property :updated_on, DateTime
   property :opened_on,  DateTime
   property :closed_on,  DateTime
   property :status,	String, :default => :new, :nullable => false

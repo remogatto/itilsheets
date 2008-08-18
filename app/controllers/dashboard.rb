@@ -1,6 +1,6 @@
 class Dashboard < Application
   def index
-    "DASHBOARD"
+    render :format => :html
   end
 
   def rest_tester

@@ -3,7 +3,7 @@ class Sheets < Application
 
   def index
     @sheets = Sheet.all
-    display @sheets
+    display({:success => true, :data => @sheets, :length => @sheets.length})
   end
 
   def show
