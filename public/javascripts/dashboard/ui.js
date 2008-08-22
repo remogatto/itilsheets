@@ -28,6 +28,7 @@ Ext.namespace("UI.blueprints");
 
 ///// DASHBOARD BLUEPRINTS
 
+var blueprints_init = function() {
 
 
 UI.blueprints.dashboard_header = {
@@ -80,3 +81,5 @@ UI.blueprints.dashboard = {
     {region: 'center', layout: 'fit', frame: false, margin: '5 5 5 5', items: [UI.blueprints.dashboard_content]}
   ]
 };
+
+}

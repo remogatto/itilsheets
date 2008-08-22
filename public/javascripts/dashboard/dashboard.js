@@ -35,6 +35,8 @@ Ext.onReady(function() {
 	      Ext.QuickTips.init();
 	      Ext.form.Field.prototype.msgTarget = 'side';
 
+	      blueprints_init();
+
 	      mask = new Ext.LoadMask(document.body,{});
 
 	      dashboard = new Ext.Viewport(UI.blueprints.dashboard);
