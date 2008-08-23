@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
 
-Ext.BLANK_IMAGE_URL = '/javascripts/ext/resources/images/s.gif';
+Ext.BLANK_IMAGE_URL = '/javascripts/ext/resources/images/default/s.gif';
 
 var dashboard;
 var mask;
@@ -35,11 +35,8 @@ Ext.onReady(function() {
 	      Ext.QuickTips.init();
 	      Ext.form.Field.prototype.msgTarget = 'side';
 
-	      blueprints_init();
+//	      mask = new Ext.LoadMask(document.body,{});
 
-	      mask = new Ext.LoadMask(document.body,{});
-
-	      dashboard = new Ext.Viewport(UI.blueprints.dashboard);
-
-	      dashboard.doLayout();
+	      dashboard = new Alca.ITILSheets.Dashboard();
+	      dashboard.render(document.body);
 	    });
