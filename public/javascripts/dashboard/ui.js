@@ -133,9 +133,7 @@ Alca.ITILSheets.SheetsGrid = Ext.extend(Ext.grid.GridPanel, {
     });
 
     Ext.apply(this, {
-      xtype: 'grid',
       id: options.grid.id,
-      anchor: '100% 100%',
       title: options.grid.title,
       store: store,
       cm: column_model,
@@ -165,7 +163,6 @@ Alca.ITILSheets.SheetsGrid = Ext.extend(Ext.grid.GridPanel, {
 Ext.reg("alca.itilsheet.sheetsgrid",Alca.ITILSheets.SheetsGrid);
 
 Alca.ITILSheets.DashboardHeader = Ext.extend(Ext.Panel, {
-  xtype: 'panel',
   id:'dashboard-header',
   bodyStyle: "background-color: lightblue; padding: 5;",
   html:'<h1 style="font-size: 24;"> Alca ITIL Sheets Panel </h1>',
@@ -214,7 +211,6 @@ Alca.ITILSheets.DashboardLeftMenu = Ext.extend(Ext.Panel, {
 Ext.reg('itilsheet.dashboard.leftmenu', Alca.ITILSheets.DashboardLeftMenu);
 
 Alca.ITILSheets.DashboardContent = Ext.extend(Ext.TabPanel,{
-  xtype: 'tabpanel',
   activeTab: 0,
   id: 'dashboard-content',
 
@@ -243,23 +239,27 @@ Alca.ITILSheets.Dashboard = Ext.extend(Ext.Viewport, {
     Ext.apply(this, {
       autoshow: true,
       useShim: true,
+		deferredRender: true,
       items: [
 	{xtype: "itilsheet.dashboard.header",
 	region: 'north',
-	 autoHeight: true
+	 height: 30
 	},
 	{xtype: "itilsheet.dashboard.leftmenu",
 	 region: 'west',
 	 id: "dashboard-left-menu",
 	 frame: true,
-	 split: true,
-	 collapsible: true,
-	 collapseMode: 'mini',
 	 maxSize: 300,
 	 minSize: 260,
-	 width: 220
+	 width: 220,
+	 split: true,
+	 collapseMode: 'mini',
+	 collapsible: true
 	},
-	{region: 'center', layout: 'fit', xtype: "panel", items: {xtype: "itilsheet.dashboard.content"}}
+	{region: 'center', xtype: "itilsheet.dashboard.content"},
+	{
+	  region: 'south', xtype: "panel", html: "prova123"
+	}
       ]
     });
 
