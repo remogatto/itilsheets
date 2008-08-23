@@ -39,4 +39,5 @@ Ext.onReady(function() {
 
 	      dashboard = new Alca.ITILSheets.Dashboard();
 	      dashboard.render(document.body);
-	    });
+	      dashboard.syncSize();
+	    },window, {delay: 250});
