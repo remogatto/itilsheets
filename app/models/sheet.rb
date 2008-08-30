@@ -24,23 +24,39 @@ class Sheet
     :status => [ :new , :open, :closed ],
   }
 
-  property :id,         Integer, :serial => true
-  property :sha_id,	String, :nullable => false, :message => "non vuoto"
-  property :short_id,	String, :nullable => false
-  property :project_short_id, String, :nullable => false
+  belongs_to :project
+
+  ### Sheet coordinate:
+  # id (db based)
+  # sha_id (sha1 based)
+  # short_id (a user customized short id)
+  # project_short_id (a user customized project short id)
+  property :id,         Integer, :serial => true, :key => true
+  property :sha_id,	String, :nullable => false, :message => "sha_id must be unique"
+  property :short_id,	String, :unique => true, :nullable => false, :message => "must be not null"
+  property :project_id, Integer, :nullable => false, :message => "must be not null"
+
+  ### Sheet stardard data
   property :summary,    String, :nullable => false
   property :body,       Text, :nullable => false
-  property :author,	String, :nullable => false
-  property :requester,	String, :nullable => false
-  property :assigned,	String
+  property :references, Yaml  
+
+  ### Sheet author, requester e assigned users
+  property :user_author,	String, :nullable => false
+  property :user_requester,	String, :nullable => false
+  property :user_assigned,	String
+
+  ### Sheet date
   property :created_on, DateTime
   property :updated_on, DateTime
   property :opened_on,  DateTime
   property :closed_on,  DateTime
+
+  ### Sheet status and substatus
   property :status,	String, :default => :new, :nullable => false
   property :substatus,  String
-  property :references, Yaml
 
+  ### Sheet class type
   property :type, Discriminator
 
   def reference sheet
