@@ -17,6 +17,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+require 'sha1'
+
 class Sheet
   include DataMapper::Resource
 
@@ -24,7 +26,9 @@ class Sheet
     :status => [ :new , :open, :closed ],
   }
 
+  ### ASSOCIATIONS BEGIN
   belongs_to :project
+  ### ASSOCIATIONS END
 
   ### Sheet coordinate:
   # id (db based)
@@ -32,9 +36,9 @@ class Sheet
   # short_id (a user customized short id)
   # project_short_id (a user customized project short id)
   property :id,         Integer, :serial => true, :key => true
-  property :sha_id,	String, :nullable => false, :message => "sha_id must be unique"
-  property :short_id,	String, :unique => true, :nullable => false, :message => "must be not null"
-  property :project_id, Integer, :nullable => false, :message => "must be not null"
+  property :sha_id,	String, :unique => true, :message => "have to be unique and not null"
+  property :short_id,	String, :unique => true, :nullable => false, :message => "have to be unique and not null"
+  property :project_id, Integer, :nullable => false, :message => "have to be not null"
 
   ### Sheet stardard data
   property :summary,    String, :nullable => false
@@ -59,6 +63,24 @@ class Sheet
   ### Sheet class type
   property :type, Discriminator
 
+  ### MANUAL VALIDATIONS BEGIN
+  validates_with_method :sha_id, :method => :check_sha_id, :context => [:sha1]
+
+  def check_sha_id
+    return [false, "have to be SHA1"] unless sha_id.length == 40 and sha_id =~ /[a-b0-9]+/
+    return true
+  end
+  ### MANUAL VALIDATIONS END
+
+  ### HOOKS BEGIN
+  before :save, :generate_sha_id
+
+  def generate_sha_id
+    self.sha_id = SHA1::sha1(self.summary) if not self.valid_for_sha1?
+  end
+  ### HOOKS END
+
+  ### UTILITY METHOS BEGIN
   def reference sheet
     self.references ||= []
 
@@ -79,13 +101,20 @@ class Sheet
     @@VALUE_MAP[varsym]
   end
 
+  def status=(arg)
+    # NOTE: status is read-only
+  end
+
   def substatus=(sym)
+    # NOTE: set status coherent to substatus
     standard_values(:substatus).each do |v|
       self.status = v[1] if v[0] == sym
     end
 
     self.attributes["substatus"] = sym
   end
+  ### UTILITY METHOS END
+
 end
 
 class TechnicalSupportRequest < Sheet
@@ -99,7 +128,7 @@ class TechnicalSupportRequest < Sheet
                   ]
   }
 
-  property :request_type, String, :lazy => false
+  property :request_type, String#, :lazy => false
 end
 
 class IncidentSheet < Sheet
@@ -114,7 +143,7 @@ class IncidentSheet < Sheet
                   ]
   }
 
-  property :components, String, :lazy => false
+  property :components, String
   property :risks, Text, :lazy => false
   property :workaround, Text, :lazy => false
   property :solution, Text, :lazy => false
@@ -132,7 +161,7 @@ class ChangeSheet < Sheet
                   ]
   }
 
-  property :components, String, :lazy => false
+  property :components, String
   property :reason, Text, :lazy => false
   property :risks, Text, :lazy => false
   property :impact, Text, :lazy => false
@@ -153,7 +182,7 @@ class TaskSheet < Sheet
   }
 
 
-  property :components, String, :lazy => false
+  property :components, String
   property :reason, Text, :lazy => false
   property :risks, Text, :lazy => false
   property :impact, Text, :lazy => false
