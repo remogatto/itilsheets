@@ -65,6 +65,12 @@ class Sheet
 
   ### MANUAL VALIDATIONS BEGIN
   validates_with_method :sha_id, :method => :check_sha_id, :context => [:sha1]
+  validates_with_method :substatus, :method => :check_substatus
+
+  def check_substatus
+    return [false, "invalid value"] unless @@VALUE_MAP[:substatus].member?(substatus)
+    return true
+  end
 
   def check_sha_id
     return [false, "have to be SHA1"] unless sha_id.length == 40 and sha_id =~ /[a-b0-9]+/
